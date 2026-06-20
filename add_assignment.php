@@ -14,6 +14,7 @@ if(isset($_POST['add_assignment'])){
     echo "<script>
         location.assign('all_assignments.php');
     </script>";
+}
 
 ?>
 

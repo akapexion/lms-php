@@ -35,7 +35,7 @@ include("base/header.php");
                     <tr>
                         <td class="fw-semibold"><?php echo $display['user_id']?></td>
                         <td>
-                            <div class="table-media"><img class="product-thumb" src="../assets/images/ecommerce/product-1.jpg"
+                            <div class="table-media"><img class="product-thumb" src="uploads/<?php echo $display['user_image'] ?>"
                                     alt="Wireless Headset"><span><?php echo $display['user_fullname']?></span></div>
                         </td>
                         <td><?php echo $display['user_email']?></td>
