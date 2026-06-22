@@ -3,10 +3,7 @@
 include("base/header.php");
 
 if(isset($_POST['add_course'])){
-    $course_title = $_POST['course_title'];
-    $course_code = $_POST['course_code'];
-    $course_duration = $_POST['course_duration'];
-    $course_status = $_POST['course_status'];
+    extract($_POST);
 
     $insert_query = "INSERT INTO courses(course_title, course_code, course_duration, course_status) VALUES('$course_title', '$course_code', '$course_duration', '$course_status')";
     $execute = mysqli_query($connection_ref, $insert_query);

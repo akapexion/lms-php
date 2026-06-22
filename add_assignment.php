@@ -4,11 +4,10 @@ include("base/header.php");
 
 if(isset($_POST['add_assignment'])){
     $assignment_title = $_POST['assignment_title'];
-    $course_name = $_POST['course_name'];
+    $course_title = $_POST['course_title'];
     $due_date = $_POST['due_date'];
-    $assignment_status = $_POST['assignment_status'];
 
-    $insert_query = "INSERT INTO assignments(assignment_title, course_name, due_date, assignment_status) VALUES('$assignment_title', '$course_name', '$due_date', '$assignment_status')";
+    $insert_query = "INSERT INTO assignments(assignment_title, assignment_course, assignment_due_date) VALUES('$assignment_title', '$course_title', '$due_date')";
     $execute = mysqli_query($connection_ref, $insert_query);
 
     echo "<script>
@@ -40,10 +39,23 @@ if(isset($_POST['add_assignment'])){
                         <div class="invalid-feedback">Assignment title is required.</div>
                     </div>
 
-                    <div class="col-md-6">
-                        <label class="form-label">Course Name</label>
-                        <input class="form-control" name="course_name" required>
-                        <div class="invalid-feedback">Course name is required.</div>
+                    <div class="col-md-6"><label class="form-label" for="formPlan">Course</label>
+
+                        <select class="form-select" name="course_title" required>
+                            <option value="">Choose Course</option>
+                            <?php
+                                $select_query = "SELECT * FROM courses";
+                                $execute = mysqli_query($connection_ref, $select_query);
+                                while($display = mysqli_fetch_array($execute)){
+                            ?>
+                                <option value="<?php echo $display['course_id']?>"><?php echo $display['course_title']?></option>
+                            <?php
+                                }
+                            ?>
+
+
+                        </select>
+                        <div class="invalid-feedback">Choose a Course.</div>
                     </div>
 
                     <div class="col-md-6">
@@ -51,20 +63,6 @@ if(isset($_POST['add_assignment'])){
                         <input class="form-control" type="date" name="due_date" required>
                         <div class="invalid-feedback">Due date is required.</div>
                     </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Status</label>
-
-                        <select class="form-select" name="assignment_status" required>
-                            <option value="">Choose status</option>
-                            <option>Pending</option>
-                            <option>Submitted</option>
-                            <option>Closed</option>
-                        </select>
-
-                        <div class="invalid-feedback">Choose a status.</div>
-                    </div>
-
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">

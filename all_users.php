@@ -1,5 +1,15 @@
 <?php
 include("base/header.php");
+
+$editId = "";
+
+if(isset($_POST['editUser'])){
+    $editId = $_POST['user_id'];
+
+
+}
+
+
 ?>
 
 
@@ -9,7 +19,8 @@ include("base/header.php");
         <div class="d-flex justify-content-between mb-5">
             <h3>All Users</h3>
 
-            <a href="add_user.php" class="btn btn-primary btn-sm" type="button"><i class="bi bi-file-earmark-plus" aria-hidden="true"></i> Create User</a>
+            <a href="add_user.php" class="btn btn-primary btn-sm" type="button"><i class="bi bi-file-earmark-plus"
+                    aria-hidden="true"></i> Create User</a>
         </div>
 
         <div class="table-responsive">
@@ -34,24 +45,49 @@ include("base/header.php");
                     ?>
                     <tr>
                         <td class="fw-semibold"><?php echo $display['user_id']?></td>
+
+
                         <td>
-                            <div class="table-media"><img class="product-thumb" src="uploads/<?php echo $display['user_image'] ?>"
+
+                            <?php
+                            if($editId === $display['user_id']){
+                            ?>
+                            <div class="table-media">
+                                <input type="text" name="" id="">
+                            </div>
+                            <?php
+                            }
+                            else {
+                            ?>
+                                <div class="table-media"><img class="product-thumb"
+                                    src="uploads/<?php echo $display['user_image'] ?>"
                                     alt="Wireless Headset"><span><?php echo $display['user_fullname']?></span></div>
+                            <?php
+                            }
+                            ?>
+
+                            
+
                         </td>
+
+
                         <td><?php echo $display['user_email']?></td>
                         <td><span class="badge text-bg-success"><?php echo $display['user_gender']?></span></td>
                         <td><?php echo $display['user_role']?></td>
                         <td class="text-end">
-                        
-                        <button class="btn btn-light btn-sm" type="button">Edit</button>
-                        <button class="btn btn-danger btn-sm" type="button">Delete</button>
+
+                            <form method="POST">
+                                <input type="hidden" name="user_id">
+                                <button class="btn btn-light btn-sm" type="button" name="editUser">Edit</button>
+                                <button class="btn btn-danger btn-sm" type="button" name="deleteUser">Delete</button>
+                            </form>
                         </td>
                     </tr>
 
                     <?php
                     }
                     ?>
-                  
+
                 </tbody>
             </table>
         </div>
