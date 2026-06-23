@@ -1,12 +1,17 @@
 <?php
-include("base/header.php");
+session_start();
+
+    if(!isset($_SESSION['user_email'])){
+        header("Location: login.php");
+        exit();
+    }
+
+    include("base/header.php");
 
 $editId = "";
 
 if(isset($_POST['editUser'])){
     $editId = $_POST['user_id'];
-
-
 }
 
 
@@ -77,8 +82,8 @@ if(isset($_POST['editUser'])){
                         <td class="text-end">
 
                             <form method="POST">
-                                <input type="hidden" name="user_id">
-                                <button class="btn btn-light btn-sm" type="button" name="editUser">Edit</button>
+                                <input type="hidden" name="user_id" value="<?php echo $display['user_id']?>">
+                                <button class="btn btn-light btn-sm" type="submit" name="editUser">Edit</button>
                                 <button class="btn btn-danger btn-sm" type="button" name="deleteUser">Delete</button>
                             </form>
                         </td>

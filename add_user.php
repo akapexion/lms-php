@@ -1,5 +1,12 @@
 <?php
-require_once "base/header.php";
+session_start();
+
+    if(!isset($_SESSION['user_email'])){
+        header("Location: login.php");
+        exit();
+    }
+
+    include("base/header.php");
 
 if(isset($_POST['add_user'])){
     extract($_POST);

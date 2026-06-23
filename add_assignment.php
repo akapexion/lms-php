@@ -1,11 +1,16 @@
 ```php
 <?php
-include("base/header.php");
+    session_start();
+
+    if(!isset($_SESSION['user_email'])){
+        header("Location: login.php");
+        exit();
+    }
+
+    include("base/header.php");
 
 if(isset($_POST['add_assignment'])){
-    $assignment_title = $_POST['assignment_title'];
-    $course_title = $_POST['course_title'];
-    $due_date = $_POST['due_date'];
+    extract($_POST);
 
     $insert_query = "INSERT INTO assignments(assignment_title, assignment_course, assignment_due_date) VALUES('$assignment_title', '$course_title', '$due_date')";
     $execute = mysqli_query($connection_ref, $insert_query);
