@@ -34,6 +34,10 @@ include("./config/db_connection.php");
           <span class="nav-icon"><i class="bi bi-speedometer2" aria-hidden="true"></i></span>
           <span class="nav-text">Dashboard</span>
         </a>
+
+        <?php
+        if($_SESSION['user_role'] == "Admin"){
+        ?>
         <a class="nav-link" href="all_users.php">
           <span class="nav-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
           <span class="nav-text">Users</span>
@@ -46,20 +50,28 @@ include("./config/db_connection.php");
           <span class="nav-icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
           <span class="nav-text">Assignments</span>
         </a>
+        <?php
+        }
+        else if($_SESSION['user_role'] == "Instructor"){
+        ?>
 
         <!-- Instructor -->
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="all_courses.php">
           <span class="nav-icon"><i class="bi bi-bar-chart-line" aria-hidden="true"></i></span>
           <span class="nav-text">My Courses</span>
         </a>
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="all_assignments.php">
           <span class="nav-icon"><i class="bi bi-table" aria-hidden="true"></i></span>
           <span class="nav-text">Assignments</span>
         </a>
-        <a class="nav-link" href="forms.html">
+        <a class="nav-link" href="all_students.php">
           <span class="nav-icon"><i class="bi bi-ui-checks-grid" aria-hidden="true"></i></span>
           <span class="nav-text">Students</span>
         </a>
+        <?php
+        }
+        else if($_SESSION['user_role'] == "Student"){
+        ?>
 
         <!-- Student -->
         <a class="nav-link" href="components.html">
@@ -82,6 +94,10 @@ include("./config/db_connection.php");
           <span class="nav-icon"><i class="bi bi-file-earmark" aria-hidden="true"></i></span>
           <span class="nav-text">Blank Page</span>
         </a>
+
+        <?php
+        }
+        ?>
       </nav>
 
       <div class="sidebar-user">
@@ -144,7 +160,7 @@ include("./config/db_connection.php");
                 <li><a class="dropdown-item" href="profile.html">Profile</a></li>
                 <li><a class="dropdown-item" href="settings.html">Account settings</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="login.html">Sign out</a></li>
+                <li><a class="dropdown-item" href="../logout.php">Sign out</a></li>
               </ul>
             </div>
           </div>

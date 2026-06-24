@@ -9,10 +9,11 @@ session_start();
     include("base/header.php");
 
 if(isset($_POST['add_user'])){
+
     extract($_POST);
 
     $image_name = $_FILES['image']['name'];
-    $image_tmp = $_FILES['image']['tmp_name'];
+    $image_tmp  = $_FILES['image']['tmp_name'];
 
     $extension = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
 
@@ -20,14 +21,51 @@ if(isset($_POST['add_user'])){
 
     if(in_array($extension, $allowed_extensions)){
 
-    move_uploaded_file($image_tmp, "uploads/".$image_name);
+        if(move_uploaded_file($image_tmp, "uploads/".$image_name)){
 
-    $insert_query = "INSERT INTO users(user_fullname, user_gender, user_role, user_email, user_image) VALUES('$fullname', '$gender', '$role', '$email', '$image_name')";
-    $execute = mysqli_query($connection_ref, $insert_query);
+            // Insert into users table
+            $insert_user = "INSERT INTO users
+            (user_fullname, user_gender, user_role, user_email, user_image)
+            VALUES
+            ('$fullname', '$gender', '$role', '$email', '$image_name')";
 
-    echo "<script>
-        location.assign('all_users.php');
-    </script>";
+            $execute_user = mysqli_query($connection_ref, $insert_user);
+
+            if($execute_user){
+
+                // If role is Student
+                if($role == "Student"){
+
+                    $insert_student = "INSERT INTO students
+                    (student_name, student_email)
+                    VALUES
+                    ('$fullname', '$email')";
+
+                    mysqli_query($connection_ref, $insert_student);
+                }
+
+                // If role is Instructor
+                else if($role == "Instructor"){
+
+                    $insert_instructor = "INSERT INTO instructors
+                    (instructor_name, instructor_email)
+                    VALUES
+                    ('$fullname', '$email')";
+
+                    mysqli_query($connection_ref, $insert_instructor);
+                }
+
+                echo "<script>
+                        location.assign('all_users.php');
+                      </script>";
+            }
+        }
+
+    } else {
+
+        echo "<script>
+                alert('Only JPG, JPEG and PNG files are allowed.');
+              </script>";
     }
 }
 ?>
@@ -66,7 +104,7 @@ if(isset($_POST['add_user'])){
                         </select>
                         <div class="invalid-feedback">Choose a role.</div>
                     </div>
-                    <div class="col-md-6"><label class="form-label" for="formPlan">Role</label>
+                    <div class="col-md-6"><label class="form-label" for="formPlan">Gender</label>
 
                         <select class="form-select" name="gender" required>
                             <option value="">Choose Gender</option>

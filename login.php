@@ -13,6 +13,7 @@ if(isset($_POST['login'])){
     $fetch_user = mysqli_fetch_array($execute);
     $_SESSION['user_email'] = $fetch_user['user_email'];
     $_SESSION['user_password'] = $fetch_user['user_password'];
+    $_SESSION['user_role'] = $fetch_user['user_role'];
 
     header("location:index.php");
   }
